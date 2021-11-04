@@ -7,7 +7,6 @@ def generate_grid() -> List[List[str]]:
     Generates list of lists of letters - i.e. grid for the game.
     e.g. [['I', 'G', 'E'], ['P', 'I', 'S'], ['W', 'M', 'G']]
     """
-    x = 0
     grid = []
     while len(grid) < 3:
         temp = []
@@ -37,17 +36,16 @@ def get_words(f: str, letters: List[str]) -> List[str]:
             else:
                 return False
         return True
-    
+  
     for word in lst:
         if is_valid(word, list(letters)):
             if (word not in result) and (len(word)>3):
-                result.append(word)
-    
+                if word.count(letters[4]) > 0:
+                    result.append(word)
+  
 
     return result
 
-
-#print(get_words(['a', 'p', 'e', 'l', 'c', 'z', 'w', 'p', 'i']))
 
 
 def get_user_words() -> List[str]:
@@ -62,21 +60,28 @@ def get_user_words() -> List[str]:
         except EOFError:
             break
    
-    print(words)
-
-get_user_words()
+    return words
 
 
 def get_pure_user_words(user_words: List[str], letters: List[str], words_from_dict: List[str]) -> List[str]:
     """
     (list, list, list) -> list
-
     Checks user words with the rules and returns list of those words
     that are not in dictionary.
     """
-    
+
     
 
 
 def results():
-    pass
+    grid = generate_grid()
+    print(grid)
+    letters = grid[0] + grid[1] + grid[2]
+    letters = [letter.lower() for letter in letters]
+    print(letters)
+    words_from_dict = get_words('f', letters)
+    print(words_from_dict)
+    user_words = get_user_words()
+    #non_dict = get_pure_user_words(user_words, letters, words_from_dict)
+
+results()
