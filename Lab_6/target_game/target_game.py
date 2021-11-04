@@ -54,34 +54,52 @@ def get_user_words() -> List[str]:
     Usage: enter a word or press ctrl+d to finish.
     """
     words = []
-    while 1:
-        try:
-            words.append(input())
-        except EOFError:
-            break
+    try:
+        words = input().split()
+    except EOFError:
+        pass
    
     return words
 
 
-def get_pure_user_words(user_words: List[str], letters: List[str], words_from_dict: List[str]) -> List[str]:
+def get_pure_user_words(user_words: List[str], letters: List[str], words_from_dict: List[str]) -> List[str]: # pylint: disable=line-too-long
     """
     (list, list, list) -> list
+
     Checks user words with the rules and returns list of those words
     that are not in dictionary.
     """
+    result = []
+    def is_valid(word, letters):
+        for w in word:
+            if w in letters:
+                letters.remove(w)
+            else:
+                return False
+        return True
+  
+    for word in user_words:
+        if is_valid(word, list(letters)):
+            if (word not in result) and (word not in words_from_dict):
+                if word.count(letters[4]) > 0:
+                    result.append(word)
 
-    
+    return result
 
 
 def results():
+    """
+    Returns results of the game
+    """
     grid = generate_grid()
-    print(grid)
     letters = grid[0] + grid[1] + grid[2]
     letters = [letter.lower() for letter in letters]
     print(letters)
     words_from_dict = get_words('f', letters)
     print(words_from_dict)
     user_words = get_user_words()
-    #non_dict = get_pure_user_words(user_words, letters, words_from_dict)
+    non_dict = get_pure_user_words(user_words, letters, words_from_dict)
+    print(non_dict)
+
 
 results()
