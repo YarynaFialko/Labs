@@ -1,11 +1,22 @@
 from typing import List
-
+import random
 def generate_grid() -> List[List[str]]:
     """
     Generates list of lists of letters - i.e. grid for the game.
     e.g. [['I', 'G', 'E'], ['P', 'I', 'S'], ['W', 'M', 'G']]
     """
-    pass
+    x = 0
+    grid = []
+    while len(grid) < 3:
+        temp = []
+        while len(temp) < 3:
+            letter = chr(random.randint(ord('A'), ord('Z')))
+            temp.append(letter)
+        grid.append(temp)
+    
+    return grid
+
+print(generate_grid())
 
 
 def get_words(f: str, letters: List[str]) -> List[str]:
