@@ -94,12 +94,24 @@ def results():
     grid = generate_grid()
     letters = grid[0] + grid[1] + grid[2]
     letters = [letter.lower() for letter in letters]
-    print(letters)
     words_from_dict = get_words('f', letters)
-    print(words_from_dict)
     user_words = get_user_words()
     non_dict = get_pure_user_words(user_words, letters, words_from_dict)
-    print(non_dict)
 
 
+    score = len(non_dict)
+    for w in user_words:
+        if w in words_from_dict:
+            score += 1
+    
+    skipped_answers = []
+    for w in words_from_dict:
+        if w not in user_words:
+            skipped_answers.append(w)
+
+
+    
+
+#Результати гри це кількість правильних слів, які ввів гравець, 
+# всі можливі слова, слова, які гравець пропустив, слова, які ввів гравець і які відсутні у словнику.
 results()
